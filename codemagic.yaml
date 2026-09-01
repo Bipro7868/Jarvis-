@@ -1,0 +1,18 @@
+workflows:
+  android-apk:
+    name: JARVIS Android APK
+    max_build_duration: 120
+    instance_type: linux_x2
+
+    scripts:
+      - name: Set Android SDK location
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+
+      - name: Build APK
+        script: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+    artifacts:
+      - app/build/outputs/apk/debug/app-debug.apk
